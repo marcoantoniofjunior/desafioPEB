@@ -88,3 +88,21 @@ async function DeletePatient(entity)
         throw error;      
     });
 }
+
+async function List(){
+    const db = pgp(process.env.DATABASE); 
+    
+    return db.task('List', async t => {
+        return await t.any('SELECT idpaciente, nome, telefone, datanascimento, altura, peso' +
+        ' FROM public.pacientes' +
+        ' ORDER BY nome ASC');        
+    });
+}
+
+module.exports = {
+    GetById,
+    Create,
+    EditPatient,
+    DeletePatient,
+    List
+};
