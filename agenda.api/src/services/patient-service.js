@@ -15,9 +15,8 @@ async function GetById(obj) {
     }
 }
 
-async function Create(obj) {
+async function Create(entity) {
     try {
-        var entity = DataTransform(obj, mapper.vmToPatient).transform();
         var r = await models.Create(entity);
         return r;
     } catch (error) {
@@ -25,9 +24,8 @@ async function Create(obj) {
     }
 }
 
-async function EditPatient(obj) {
+async function EditPatient(entity) {
     try {
-        var entity = DataTransform(obj, mapper.vmToPatient).transform();
         var r = await models.EditPatient(entity);
         return r;
     } catch (error) {
@@ -35,9 +33,8 @@ async function EditPatient(obj) {
     }
 }
 
-async function DeletePatient(obj) {
+async function DeletePatient(entity) {
     try {
-        var entity = DataTransform(obj, mapper.vmToPatient).transform();
         var r = await models.DeletePatient(entity);
         return r;
     } catch (error) {

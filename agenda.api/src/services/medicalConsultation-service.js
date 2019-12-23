@@ -25,9 +25,9 @@ async function GetListByPatientId(obj) {
     }
 }
 
-async function Create(obj) {
+async function Create(entity) {
     try {
-        var entity = DataTransform(obj, mapper.vmToPatient).transform();
+        console.log(entity);
         var r = await models.Create(entity);
         return r;
     } catch (error) {
@@ -35,21 +35,17 @@ async function Create(obj) {
     }
 }
 
-async function EditMedicalConsultation(obj) {
+async function EditMedicalConsultation(entity) {
     try {
-        var entity = DataTransform(obj, mapper.vmToPatient).transform();
-
         var r = await models.EditMedicalConsultation(entity);
-
         return r;
     } catch (error) {
         throw error;
     }
 }
 
-async function DeleteMedicalConsultation(obj) {
+async function DeleteMedicalConsultation(entity) {
     try {
-        var entity = DataTransform(obj, mapper.vmToPatient).transform();
         var r = await models.DeleteMedicalConsultation(entity);
         return r;
     } catch (error) {

@@ -18,6 +18,7 @@ async function GetById(entity) {
                 ',datanascimento' +
                 ',altura' +
                 ',peso' +
+                ',sexo' +
                 'FROM public.pacientes' +
                 'WHERE idpacient = $1', [entity.idPatient]);
             return {
@@ -39,8 +40,8 @@ async function GetById(entity) {
 async function Create(entity) {
     const db = pgp(process.env.DATABASE);
 
-    return db.task('Create', async t => {
-            await t.none('INSERT INTO public.pacientes(nome, telefone, datanascimento, altura, peso) VALUES ($1,$2,$3,$4,$5)', [entity.nome, entity.telefone, entity.dataNascimento, entity.altura, entity.peso]);
+    return db.task('Create', async t => { 
+            await t.none('INSERT INTO public.pacientes(nome, telefone, datanascimento, altura, peso, sexo) VALUES ($1,$2,$3,$4,$5,$6)', [entity.name, entity.phone, entity.dateBirth, entity.height, entity.weight, entity.gender]);
         })
         .then(events => {
             return true;
@@ -56,8 +57,8 @@ async function EditPatient(entity) {
 
     return db.task('EditPatient', async t => {
             await t.none('UPDATE public.pacientes' +
-                'SET nome= $1, telefone= $2, datanascimento= $3, altura= $4, peso= $5' +
-                'WHERE idPaciente = $6', [entity.nome, entity.telefone, entity.dataNascimento, entity.altura, entity.peso, entity.idPaciente]);
+                'SET nome= $1, telefone= $2, datanascimento= $3, altura= $4, peso= $5, sexo = $6' +
+                'WHERE idPaciente = $7', [entity.name, entity.phone, entity.dateBirth, entity.height, entity.weight, entity.gender, entity.idPaciente]);
         })
         .then(events => {
             return true;
@@ -87,7 +88,7 @@ async function List() {
     const db = pgp(process.env.DATABASE);
 
     return db.task('List', async t => {
-        return await t.any('SELECT idpaciente, nome, telefone, datanascimento, altura, peso' +
+        return await t.any('SELECT idpaciente, nome, telefone, datanascimento, altura, peso, sexo' +
             ' FROM public.pacientes' +
             ' ORDER BY nome ASC');
     });

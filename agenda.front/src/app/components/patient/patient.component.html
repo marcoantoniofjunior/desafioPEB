@@ -1,11 +1,12 @@
 <div id='patientsDiv'>
-
-    <div>
-        <p>Pacientes</p>
-        <button class="btn btn-outline-primary" (click)="open(content)">Novo Paciente</button>
-
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <h2>Pacientes</h2>
+        </div>
+        <div class="form-group col-md-9">
+            <button class="btn btn-outline-primary" (click)="open(content)">Novo Paciente</button>
+        </div>
     </div>
-    <hr>
     <div id='table'>
         <table class="table table-striped">
             <thead>
@@ -19,7 +20,7 @@
             <tbody>
                 <tr *ngFor="let item of patients">
                     <td>{{item?.name}}</td>
-                    <td>{{item?.dataBirth}}</td>Ï
+                    <td>{{item?.dateBirth | date: 'dd/MM/yyyy' }}</td>
                     <td>{{item?.gender}}</td>
                     <td>{{item?.phone}}</td>
                 </tr>
@@ -37,19 +38,63 @@
     </div>
     <div class="modal-body">
         <form>
-            <div class="form-group">
-                <label for="dateOfBirth">Data</label>
-                <div class="input-group">
-                    <input id="dateOfBirth" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
-                        #dp="ngbDatepicker">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
+            <div class="form-row">
+                <div class="form-group col-md-9">
+                    <label class="control-label">Nome</label>
+                    <div class="">
+                        <input placeholder="" class="form-control input-md" required="" type="text"
+                            [(ngModel)]="patient.name" [ngModelOptions]="{standalone: true}">
+                    </div>
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label class=" control-label">Nascimento</label>
+                    <div class="">
+                        <input placeholder="DD/MM/AAAA" class="form-control input-md" required="" type="text"
+                            maxlength="10" [(ngModel)]="patient.dateBirth" [ngModelOptions]="{standalone: true}">
                     </div>
                 </div>
             </div>
+
+            <div class="form-row">
+                <!-- Text input-->
+                <div class="form-group col-md-3">
+                    <label class=" control-label">Telefone</label>
+                    <div class="">
+                        <input placeholder="(xx) xxxx-xxxx" class="form-control input-md" required="" type="text"
+                            maxlength="15" [(ngModel)]="patient.phone" [ngModelOptions]="{standalone: true}">
+                    </div>
+                </div>
+
+                <div class="form-group ">
+                    <label class="control-label">Sexo</label>
+                    <div class="">
+                        <input class="form-control input-md" required="" type="text" maxlength="15"
+                            [(ngModel)]="patient.gender" [ngModelOptions]="{standalone: true}">
+                    </div>
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label class="control-label" for="weight">Peso</label>
+                    <div class="">
+                        <input id="weight" name="weight" class="form-control input-md" required="" type="number"
+                            maxlength="5" [(ngModel)]="patient.weight" [ngModelOptions]="{standalone: true}">
+                    </div>
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label class=" control-label">Altura</label>
+                    <div class="">
+                        <input class="form-control input-md" required="" type="number" maxlength="5"
+                            [(ngModel)]="patient.height" [ngModelOptions]="{standalone: true}">
+                    </div>
+                </div>
+
+            </div>
+
         </form>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+        <button type="button" class="btn btn-outline-dark" (click)="createPatient()">Save</button>
     </div>
 </ng-template>

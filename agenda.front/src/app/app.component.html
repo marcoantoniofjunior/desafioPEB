@@ -1,5 +1,28 @@
-<div class="container">
-  <router-outlet></router-outlet>
+<div class="wrapper">
+  <div class="row">
+    <div class="col-md-2 col-xl-2">
+      <h6>PRONTOMED</h6>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2 col-xl-2">
+      <nav class="navbar navbar-light navbar-expand-sm px-0 flex-row flex-nowrap">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarWEX"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse" id="navbarWEX">
+          <div class="nav flex-sm-column flex-row">
+            <a class="nav-item nav-link" routerLink="/patient" routerLinkActive="active" >Pacientes</a>
+            <a class="nav-item nav-link" routerLink="/schedules">Agendamentos</a>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class="col-md-9">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
 </div>
 
 <title>Agenda</title>

@@ -1,11 +1,13 @@
 <div id='schedulesDiv'>
-
-    <div>
-        <p>Agendamentos</p>
-        <button class="btn btn-outline-primary" (click)="open(content)">Novo Agendamento</button>
-
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <h2>Agendamentos</h2>
+        </div>
+        <div class="form-group col-md-9">
+            <button class="btn btn-outline-primary" (click)="open(content)">Novo Agendamento</button>
+        </div>
     </div>
-    <hr>
+
     <div id='table'>
         <table class="table table-striped">
             <thead>
@@ -17,7 +19,7 @@
             <tbody>
                 <tr *ngFor="let item of schedules">
                     <td>{{item?.name}}</td>
-                    <td>{{item?.dateConsultation}}</td>Ï
+                    <td>{{item?.dateConsultation | date: 'dd/MM/yyyy': 'UTC'}}</td>
                 </tr>
             </tbody>
         </table>
@@ -34,10 +36,24 @@
     <div class="modal-body">
         <form>
             <div class="form-group">
-                <label for="dateOfBirth">Data</label>
+                <label>Paciente</label>
                 <div class="input-group">
-                    <input id="dateOfBirth" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
-                        #dp="ngbDatepicker">
+                    <div ngbDropdown class="d-inline-block">
+                        <button class="btn btn-outline-primary" id="sortPatient"
+                            ngbDropdownToggle>{{displayName}}</button>
+                        <div ngbDropdownMenu aria-labelledby="sortPatient">
+                            <button class="dropdown-item" (click)="clearSelectPatient()"></button>
+                            <button class="dropdown-item" *ngFor="let patient of patients"
+                                (click)="selectPatient(patient)">{{patient?.name}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Data</label>
+                <div class="input-group">
+                    <input class="form-control" placeholder="dd-mm-yyyy" ngbDatepicker #dp="ngbDatepicker"
+                        [(ngModel)]="dateSchedule" [ngModelOptions]="{standalone: true}">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
                     </div>
@@ -46,6 +62,6 @@
         </form>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+        <button type="button" class="btn btn-outline-dark" (click)="schedulePatient()">Salvar</button>
     </div>
 </ng-template>

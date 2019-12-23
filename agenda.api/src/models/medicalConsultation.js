@@ -21,7 +21,7 @@ async function GetListByPatientId(entity) {
 
     return db.task('List', async t => {
         return await t.any('select nome, dataconsulta, idagendamento, status from consultas' +
-            'WHERE idpaciente = $1', [entity.idPaciente]);
+            'WHERE idpaciente = $1', [entity.patientCode]);
     });
 }
 
@@ -29,7 +29,7 @@ async function Create(entity) {
     const db = pgp(process.env.DATABASE);
 
     return db.task('Create', async t => {
-            await t.none('INSERT INTO public.agendamentos(idpaciente, idstatusagendamento, dataagendamentoconsulta, dataconsulta) VALUES ($1,$2,$3,$4)', [entity.idPaciente, '1', '2019-12-22', entity.dataConsulta]);
+            await t.none('INSERT INTO public.agendamentos(idpaciente, idstatusagendamento, dataagendamentoconsulta, dataconsulta) VALUES ($1,$2,$3,$4)', [entity.patientCode, '1', '2019-12-22', entity.dateConsultation]);
         })
         .then(events => {
             return true;
@@ -44,7 +44,7 @@ async function EditMedicalConsultation(entity) {
     return await db.tx('EditMedicalConsultation', async t => {
             await t.none('UPDATE public.agendamentos' +
                 'SET idstatusagendamento= $1, dataconsulta=$2' +
-                'WHERE idAgendamento = $3', ['1', entity.dataConsulta, entity.idAgendamento]);
+                'WHERE idAgendamento = $3', ['1', entity.dateConsultation, entity.code]);
         })
         .then(events => {
             return true;
@@ -57,8 +57,8 @@ async function EditMedicalConsultation(entity) {
 
 async function DeleteMedicalConsultation(entity) {
     return await db.tx('DeleteMedicalConsultation', async t => {
-            await t.none('delete from anotacoesconsulta where idconsulta = $1', [entity.idAgendamento]);
-            const result = await t.none('delete from agendamentos where idagendamento = $1', [entity.idAgendamento]);
+            await t.none('delete from anotacoesconsulta where idconsulta = $1', [entity.code]);
+            const result = await t.none('delete from agendamentos where idagendamento = $1', [entity.code]);
             return result;
         })
         .then(({

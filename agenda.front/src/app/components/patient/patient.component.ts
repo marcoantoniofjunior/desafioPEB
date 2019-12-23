@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PatientService } from './patient.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   // tslint:disable-next-line: component-selector
@@ -9,7 +9,18 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./patient.component.css']
 })
 export class PatientComponent implements OnInit {
+  modalReference: NgbModalRef;
+
   patients: any[] = [];
+
+  patient = {
+    name: '',
+    dateBirth: '',
+    phone: '',
+    gender: '',
+    weight: '',
+    height: ''
+  };
 
   constructor(
     private patientService: PatientService,
@@ -37,14 +48,30 @@ export class PatientComponent implements OnInit {
   }
 
   open(content) {
-    this.modalService
-      .open(content, { ariaLabelledBy: 'modal-basic-title' })
-      .result.then(
-        result => {
-          //this.closeResult = `Closed with: ${result}`;
+    this.modalReference = this.modalService.open(content, {
+      ariaLabelledBy: 'modal-basic-title',
+      size: 'lg'
+    });
+    this.modalReference.result.then(
+      result => {},
+      reason => {}
+    );
+  }
+
+  createPatient() {
+    console.log(this.patient);
+    this.patientService
+      .create(this.patient)
+      .toPromise()
+      .then(
+        (p: any) => {
+          this.listPatient();
+          this.modalReference.close();
+          // alert success ;
         },
-        reason => {
-          //this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        err => {
+          // alert error ;
+          console.log(err);
         }
       );
   }

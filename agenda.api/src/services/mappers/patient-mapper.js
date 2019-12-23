@@ -5,7 +5,7 @@ const patientToVm = {
         patientId: "idpaciente",
         name: "nome",
         phone: "telefone",
-        dataBirth: "datanascimento",
+        dateBirth: "datanascimento",
         gender: "sexo",
         weight: "peso",
         height: "altura"
@@ -16,7 +16,7 @@ const vmToPatient = {
     idpaciente: "patientId",
     nome: "name",
     telefone: "phone",
-    dataNascimento: "dataBirth",
+    dataNascimento: "dateBirth",
     sexo: "gender",
     peso: "weight",
     altura: "height"
