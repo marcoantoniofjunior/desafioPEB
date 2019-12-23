@@ -72,7 +72,7 @@ async function DeleteMedicalConsultation(entity) {
     // .finally(db.$pool.end);
 }
 
-models.exports = {
+module.exports = {
     List,
     GetListByPatientId,
     Create,

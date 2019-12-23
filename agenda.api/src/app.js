@@ -1,12 +1,15 @@
 'use strict';
 
 const express = require('express');
-const bodyParser = require('bodyParser');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const app = express();
 
-const patientRoute = require('../src/routes/patient-route');
-const medicalConsultationRoute = require('../src/routes/medicalConsultation-route');
+const patientRoute = require('./routes/patient-route');
+const medicalConsultationRoute = require('./routes/medicalConsultation-route');
+
+app.use(cors());
 
 app.use(bodyParser.json());
 

@@ -29,7 +29,7 @@ export class SchedulesService {
 
   getList(): Observable<object> {
     return this.httpClient.get(
-      `${ApiUrl}/medicalconsultation/district`,
+      `${ApiUrl}/medicalconsultation/list`,
       this.getOptions()
     );
   }

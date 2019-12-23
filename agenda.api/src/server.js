@@ -1,12 +1,14 @@
 'use strict';
 
-const app = require('../src/app').default;
+const app = require('../src/app');
 const http = require('http');
 const debug = require('debug')('nodeApi:server');
 const dotenv = require('dotenv');
 const path = require('path');
 
 const port = normalizePort(process.env.PORT) || 3000;
+
+app.set('port', port);
 
 dotenv.config({
     path: path.resolve(__dirname, '../.env.dev')
@@ -34,6 +36,15 @@ function normalizePort(val) {
     }
     return false;
 };
+
+function onListening(){
+
+    const addr = server.address();
+
+    const bind = typeof addr === 'string' ? 'Pipe ' + port : 'Port ' + addr.port;
+    
+    debug('Listening on' + bind);
+}
 
 function onError(error) {
 

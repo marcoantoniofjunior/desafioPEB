@@ -7,8 +7,9 @@ var DataTransform = require("node-json-transform").DataTransform;
 
 async function List() {
     try {
+
         let result = await models.List();
-        var vm = DataTransform(result, mappers.productToVm).transform();
+        var vm = DataTransform(result, mappers.medicalConsultationToVm).transform();
         return vm;
     } catch (err) {
         throw err;
@@ -56,7 +57,7 @@ async function DeleteMedicalConsultation(obj) {
     }
 }
 
-models.exports = {
+module.exports = {
     List,
     GetListByPatientId,
     Create,

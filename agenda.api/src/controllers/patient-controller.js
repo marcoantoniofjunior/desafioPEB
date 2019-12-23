@@ -1,6 +1,6 @@
 'use strict';
 
-const service = require('./node_modules../node_modules');
+const service = require('../services/patient-service');
 
 exports.getById = async (req, res) => {
 
