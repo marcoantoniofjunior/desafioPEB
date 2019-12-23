@@ -1,34 +1,34 @@
 import { Component, OnInit } from '@angular/core';
-import { PatientService } from './patient.service';
+import { SchedulesService } from './schedules.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   // tslint:disable-next-line: component-selector
-  selector: 'patient',
-  templateUrl: './patient.component.html',
-  styleUrls: ['./patient.component.css']
+  selector: 'schedules',
+  templateUrl: './schedules.component.html',
+  styleUrls: ['./schedules.component.css']
 })
-export class PatientComponent implements OnInit {
-  patients: any[] = [];
+export class SchedulesComponent implements OnInit {
+  schedules: any[] = [];
 
   constructor(
-    private patientService: PatientService,
+    private schedulesService: SchedulesService,
     private modalService: NgbModal
   ) {}
 
   ngOnInit() {
-    this.listPatient();
+    this.listSchedules();
   }
 
-  listPatient() {
-    this.patients = [];
+  listSchedules() {
+    this.schedules = [];
 
-    this.patientService
+    this.schedulesService
       .getList()
       .toPromise()
       .then(
-        (p: any) => {
-          this.patients = p;
+        (s: any) => {
+          this.schedules = s;
         },
         err => {
           console.log(err);

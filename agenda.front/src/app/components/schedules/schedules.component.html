@@ -1,8 +1,8 @@
-<div id='patientsDiv'>
+<div id='schedulesDiv'>
 
     <div>
-        <p>Pacientes</p>
-        <button class="btn btn-outline-primary" (click)="open(content)">Novo Paciente</button>
+        <p>Agendamentos</p>
+        <button class="btn btn-outline-primary" (click)="open(content)">Novo Agendamento</button>
 
     </div>
     <hr>
@@ -11,17 +11,13 @@
             <thead>
                 <tr>
                     <th>Paciente</th>
-                    <th>Data Nascimento</th>
-                    <th>Sexo</th>
-                    <th>Telefone</th>
+                    <th>Data</th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let item of patients">
+                <tr *ngFor="let item of schedules">
                     <td>{{item?.name}}</td>
-                    <td>{{item?.dataBirth}}</td>Ï
-                    <td>{{item?.gender}}</td>
-                    <td>{{item?.phone}}</td>
+                    <td>{{item?.dateConsultation}}</td>Ï
                 </tr>
             </tbody>
         </table>
@@ -30,7 +26,7 @@
 
 <ng-template #content let-modal>
     <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Novo Paciente</h4>
+        <h4 class="modal-title" id="modal-basic-title">Novo Agendamento</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>
