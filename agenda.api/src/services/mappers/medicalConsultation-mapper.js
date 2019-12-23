@@ -1,11 +1,24 @@
 'use strict';
 
 const medicalConsultationToVm = {
-    item:{
-        Name: "nome",
-        DateConsultation: "dataconsulta",
-        Status:"status",
+    item: {
+        code: "idagendamento",
+        patientCode: "idpaciente",
+        name: "nome",
+        dateConsultation: "dataconsulta",
+        status: "status",
     }
 }
 
-module.exports = { medicalConsultationToVm };
+const vmToMedicalConsultation = {
+    idAgendamento: "code",
+    idPaciente: "patientCode",
+    nome: "name",
+    dataConsulta: "dateConsultation",
+    status: "status"
+}
+
+module.exports = {
+    medicalConsultationToVm,
+    vmToMedicalConsultation
+};

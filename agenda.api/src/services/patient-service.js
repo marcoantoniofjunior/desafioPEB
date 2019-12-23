@@ -1,9 +1,6 @@
 "use strict";
 
-const linq = require("underscore");
-
 const models = require("../models/patient");
-
 const mappers = require("../services/mappers/patient-mapper");
 
 var DataTransform = require("node-json-transform").DataTransform;
@@ -57,16 +54,13 @@ async function DeletePatient(obj) {
 }
 
 async function List() {
-    try
-    {
+    try {
         let result = await models.List();
 
         var vm = DataTransform(result, mappers.productToVm).transform();
 
         return vm;
-    }
-    catch(err)
-    {
+    } catch (err) {
         throw err;
     }
 }

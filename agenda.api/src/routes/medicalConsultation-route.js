@@ -2,9 +2,9 @@
 
 const express = require('express');
 const route = express.Router();
-const controller = require('../controllers/patient-controller');
+const controller = require('../controllers/medicalConsultation-controller');
 
-route.get('/GetById', controller.getById);
+route.get('/getListByPatientId', controller.getListByPatientId);
 route.get('/list', controller.list);
 route.post('/create', controller.create);
 route.post('/edit', controller.edit);
