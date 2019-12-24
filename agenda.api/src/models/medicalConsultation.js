@@ -12,7 +12,7 @@ async function List() {
     const db = pgp(process.env.DATABASE);
 
     return db.task('List', async t => {
-        return await t.any('select idpaciente, nome, idagendamento, dataconsulta, status from consultas');
+        return await t.any('select idpaciente, nome, idagendamento, dataconsulta  from consultas');
     });
 }
 
@@ -20,7 +20,7 @@ async function GetListByPatientId(entity) {
     const db = pgp(process.env.DATABASE);
 
     return db.task('List', async t => {
-        return await t.any('select nome, dataconsulta, idagendamento, status from consultas' +
+        return await t.any('select nome, dataconsulta, idagendamento  from consultas' +
             'WHERE idpaciente = $1', [entity.patientCode]);
     });
 }
@@ -29,7 +29,7 @@ async function Create(entity) {
     const db = pgp(process.env.DATABASE);
 
     return db.task('Create', async t => {
-            await t.none('INSERT INTO public.agendamentos(idpaciente, idstatusagendamento, dataagendamentoconsulta, dataconsulta) VALUES ($1,$2,$3,$4)', [entity.patientCode, '1', '2019-12-22', entity.dateConsultation]);
+            await t.none('INSERT INTO public.agendamentos(idpaciente, dataagendamentoconsulta, dataconsulta) VALUES ($1,$2,$3)', [entity.patientCode, '1900-01-01', entity.dateConsultation]);
         })
         .then(events => {
             return true;
@@ -43,8 +43,8 @@ async function Create(entity) {
 async function EditMedicalConsultation(entity) {
     return await db.tx('EditMedicalConsultation', async t => {
             await t.none('UPDATE public.agendamentos' +
-                'SET idstatusagendamento= $1, dataconsulta=$2' +
-                'WHERE idAgendamento = $3', ['1', entity.dateConsultation, entity.code]);
+                'SET dataconsulta= $1' +
+                'WHERE idAgendamento = $2', [ entity.dateConsultation, entity.code]);
         })
         .then(events => {
             return true;

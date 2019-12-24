@@ -27,7 +27,6 @@ async function GetListByPatientId(obj) {
 
 async function Create(entity) {
     try {
-        console.log(entity);
         var r = await models.Create(entity);
         return r;
     } catch (error) {

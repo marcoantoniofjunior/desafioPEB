@@ -11,7 +11,11 @@ export class SharedDataService {
   }
 
   getData() {
-    return this.data;
+    if (this.data) {
+      return JSON.parse(JSON.stringify(this.data));
+    } else {
+      return null;
+    }
   }
 
   clearData() {

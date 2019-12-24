@@ -22,17 +22,26 @@ export class PatientDetailComponent implements OnInit {
   ) {}
 
   patientDetail: any;
+  patientDetailEdit: any;
   annotations: any[] = [];
 
   ngOnInit() {
-    this.patientService = this.sharedDataService.getData();
+    this.patientDetail = this.sharedDataService.getData();
+    this.patientDetailEdit = this.sharedDataService.getData();
+
+    if (!this.patientDetail) {
+      this.router.navigate(['/patient']);
+    }
 
     //this.getPatientAnnotations(this.patientDetail);
   }
 
   openEdit(content) {
+    this.patientDetailEdit = this.sharedDataService.getData();
+
     this.modalReference = this.modalService.open(content, {
-      ariaLabelledBy: 'modal-basic-title'
+      ariaLabelledBy: 'modal-basic-title',
+      size: 'lg'
     });
     this.modalReference.result.then(
       result => {},
@@ -42,7 +51,8 @@ export class PatientDetailComponent implements OnInit {
 
   openDelete(modalDelete) {
     this.modalReference = this.modalService.open(modalDelete, {
-      ariaLabelledBy: 'modal-basic-title'});
+      ariaLabelledBy: 'modal-basic-title'
+    });
     this.modalReference.result.then(
       result => {},
       reason => {}
@@ -59,14 +69,16 @@ export class PatientDetailComponent implements OnInit {
     );
   }
 
-  editPatient(patient: any) {
+  editPatient() {
     this.patientService
-      .edit(patient)
+      .edit(this.patientDetailEdit)
       .toPromise()
       .then(
         (result: any) => {
           this.modalReference.close();
-          // UPDATE DATA DISPLAY
+          this.patientDetail = JSON.parse(
+            JSON.stringify(this.patientDetailEdit)
+          );
         },
         err => {
           console.log(err);
@@ -74,15 +86,14 @@ export class PatientDetailComponent implements OnInit {
       );
   }
 
-  deletePatient(patient: any) {
+  deletePatient() {
     this.patientService
-      .delete(patient)
+      .delete(this.patientDetail)
       .toPromise()
       .then(
         (p: any) => {
           this.modalReference.close();
-          // GO TO PATIENTS PAGE
-          // alert success ;
+          this.router.navigate(['/patient']);
         },
         err => {
           // alert error ;

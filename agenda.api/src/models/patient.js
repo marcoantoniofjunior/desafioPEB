@@ -40,7 +40,7 @@ async function GetById(entity) {
 async function Create(entity) {
     const db = pgp(process.env.DATABASE);
 
-    return db.task('Create', async t => { 
+    return db.task('Create', async t => {
             await t.none('INSERT INTO public.pacientes(nome, telefone, datanascimento, altura, peso, sexo) VALUES ($1,$2,$3,$4,$5,$6)', [entity.name, entity.phone, entity.dateBirth, entity.height, entity.weight, entity.gender]);
         })
         .then(events => {
@@ -54,11 +54,10 @@ async function Create(entity) {
 
 async function EditPatient(entity) {
     const db = pgp(process.env.DATABASE);
-
     return db.task('EditPatient', async t => {
-            await t.none('UPDATE public.pacientes' +
-                'SET nome= $1, telefone= $2, datanascimento= $3, altura= $4, peso= $5, sexo = $6' +
-                'WHERE idPaciente = $7', [entity.name, entity.phone, entity.dateBirth, entity.height, entity.weight, entity.gender, entity.idPaciente]);
+            await t.none('UPDATE public.pacientes ' +
+                'SET nome= $1, telefone= $2, datanascimento= $3, altura= $4, peso= $5, sexo = $6 ' +
+                'WHERE idPaciente = $7', [entity.name, entity.phone, entity.dateBirth, entity.height, entity.weight, entity.gender, entity.patientId]);
         })
         .then(events => {
             return true;
@@ -69,11 +68,13 @@ async function EditPatient(entity) {
         });
 }
 
-async function DeletePatient(entity) {đ
+async function DeletePatient(entity) {
     const db = pgp(process.env.DATABASE);
 
     return db.task('DeletePatient', async t => {
-            await t.none('DELETE FROM public.pacientes WHERE idPaciente = $1', [entity.idPaciente]);
+            await t.none('DELETE FROM agendamentos where idPaciente = $1', [entity.patientId]);
+            const result = await  t.none('DELETE FROM public.pacientes WHERE idPaciente = $1', [entity.patientId]);
+            return result;
         })
         .then(events => {
             return true;

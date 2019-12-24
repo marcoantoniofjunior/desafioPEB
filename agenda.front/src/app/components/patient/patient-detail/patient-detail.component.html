@@ -121,7 +121,7 @@
                     <label class="control-label">Nome</label>
                     <div class="">
                         <input placeholder="" class="form-control input-md" required="" type="text"
-                            [(ngModel)]="patientDetail.name" [ngModelOptions]="{standalone: true}">
+                            [(ngModel)]="patientDetailEdit.name" [ngModelOptions]="{standalone: true}">
                     </div>
                 </div>
 
@@ -129,7 +129,7 @@
                     <label class=" control-label">Nascimento</label>
                     <div class="">
                         <input placeholder="DD/MM/AAAA" class="form-control input-md" required="" type="text"
-                            maxlength="10" [(ngModel)]="patientDetail.dateBirth" [ngModelOptions]="{standalone: true}">
+                            maxlength="10" [(ngModel)]="patientDetailEdit.dateBirth" [ngModelOptions]="{standalone: true}">
                     </div>
                 </div>
             </div>
@@ -140,7 +140,7 @@
                     <label class=" control-label">Telefone</label>
                     <div class="">
                         <input placeholder="(xx) xxxx-xxxx" class="form-control input-md" required="" type="text"
-                            maxlength="15" [(ngModel)]="patientDetail.phone" [ngModelOptions]="{standalone: true}">
+                            maxlength="15" [(ngModel)]="patientDetailEdit.phone" [ngModelOptions]="{standalone: true}">
                     </div>
                 </div>
 
@@ -148,7 +148,7 @@
                     <label class="control-label">Sexo</label>
                     <div class="">
                         <input class="form-control input-md" required="" type="text" maxlength="15"
-                            [(ngModel)]="patientDetail.gender" [ngModelOptions]="{standalone: true}">
+                            [(ngModel)]="patientDetailEdit.gender" [ngModelOptions]="{standalone: true}">
                     </div>
                 </div>
 
@@ -156,7 +156,7 @@
                     <label class="control-label" for="weight">Peso</label>
                     <div class="">
                         <input id="weight" name="weight" class="form-control input-md" required="" type="number"
-                            maxlength="5" [(ngModel)]="patientDetail.weight" [ngModelOptions]="{standalone: true}">
+                            maxlength="5" [(ngModel)]="patientDetailEdit.weight" [ngModelOptions]="{standalone: true}">
                     </div>
                 </div>
 
@@ -164,7 +164,7 @@
                     <label class=" control-label">Altura</label>
                     <div class="">
                         <input class="form-control input-md" required="" type="number" maxlength="5"
-                            [(ngModel)]="patientDetail.height" [ngModelOptions]="{standalone: true}">
+                            [(ngModel)]="patientDetailEdit.height" [ngModelOptions]="{standalone: true}">
                     </div>
                 </div>
 
@@ -173,7 +173,7 @@
         </form>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="createPatient()">Save</button>
+        <button type="button" class="btn btn-outline-dark" (click)="editPatient()">Save</button>
     </div>
 </ng-template>
 
@@ -195,6 +195,6 @@
     <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary"
             (click)="modal.dismiss('cancel click')">Cancelar</button>
-        <button type="button" ngbAutofocus class="btn btn-danger" (click)="modal.close('Ok click')">Deletar</button>
+        <button type="button" ngbAutofocus class="btn btn-danger" (click)="deletePatient()">Deletar</button>
     </div>
 </ng-template>
