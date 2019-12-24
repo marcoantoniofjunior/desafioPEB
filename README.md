@@ -15,6 +15,10 @@ desafio PEB
 
 Script de criação do banco de dados encontra-se no diretório api/src/models/database.
 
-Banco de dados Postregres.
+### Descrição do Projeto
 
+Front: Angular 8.3.21
 
+Back: NodeJs: 10.15.3/ Express: 4.17.1
+
+Banco: Postgres
