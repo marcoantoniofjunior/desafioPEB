@@ -1,1 +1,200 @@
-<p>patient-detail works!</p>
+<div id="patientDetail">
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <h2>Paciente {{firstName}}</h2>
+        </div>
+        <div class="form-group col-md-9">
+            <button class="btn btn-outline-primary" (click)="openEdit(content)">Editar Cadastro</button>
+            <button class="btn btn-outline-danger" (click)="openDelete(modalDelete)">Excluir Cadastro</button>
+        </div>
+    </div>
+    <hr>
+    <div id='patientDetail'>
+        <div class="form-row">
+            <div class="form-group">
+                <label class="control-label">Nome: {{patientDetail?.name}}</label>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label class="control-label">Data Nascimento:
+                    {{patientDetail?.dateBirth | date: 'dd/MM/yyyy': 'UTC' }}</label>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label">Altura: {{patientDetail?.height }}</label>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label class="control-label">Sexo: {{patientDetail?.gender}}</label>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label">Peso: {{patientDetail?.weight }}</label>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label class="control-label">Telefone: {{patientDetail?.phone}}</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <button class="btn btn-outline-primary" (click)="openCreateAnnotation(modalAnnotation)">Inserir
+                Anotações</button>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group">
+            <div id='table'>
+                <table class="table table-striped" >
+                    <thead>
+                        <tr>
+                            <th>Data Consulta</th>
+                            <th>Atendimento</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of annotations">
+                            <td>{{item?.dataConsultation}}</td>
+                            <td>{{item?.description}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #modalAnnotation let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Anotações do Atendimento</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="form-group">
+                <label>Paciente</label>
+                <div class="input-group">
+                    <div ngbDropdown class="d-inline-block">
+                        <button class="btn btn-outline-primary" id="sortPatient"
+                            ngbDropdownToggle>{{displayName}}</button>
+                        <div ngbDropdownMenu aria-labelledby="sortPatient">
+                            <button class="dropdown-item" (click)="clearSelectPatient()"></button>
+                            <button class="dropdown-item" *ngFor="let patient of patients"
+                                (click)="selectPatient(patient)">{{patient?.name}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Data</label>
+                <div class="input-group">
+                    <input class="form-control" placeholder="dd-mm-yyyy" ngbDatepicker #dp="ngbDatepicker"
+                        [(ngModel)]="dateSchedule" [ngModelOptions]="{standalone: true}">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="schedulePatient()">Salvar</button>
+    </div>
+</ng-template>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Editar Paciente</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="form-row">
+                <div class="form-group col-md-9">
+                    <label class="control-label">Nome</label>
+                    <div class="">
+                        <input placeholder="" class="form-control input-md" required="" type="text"
+                            [(ngModel)]="patientDetail.name" [ngModelOptions]="{standalone: true}">
+                    </div>
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label class=" control-label">Nascimento</label>
+                    <div class="">
+                        <input placeholder="DD/MM/AAAA" class="form-control input-md" required="" type="text"
+                            maxlength="10" [(ngModel)]="patientDetail.dateBirth" [ngModelOptions]="{standalone: true}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <!-- Text input-->
+                <div class="form-group col-md-3">
+                    <label class=" control-label">Telefone</label>
+                    <div class="">
+                        <input placeholder="(xx) xxxx-xxxx" class="form-control input-md" required="" type="text"
+                            maxlength="15" [(ngModel)]="patientDetail.phone" [ngModelOptions]="{standalone: true}">
+                    </div>
+                </div>
+
+                <div class="form-group ">
+                    <label class="control-label">Sexo</label>
+                    <div class="">
+                        <input class="form-control input-md" required="" type="text" maxlength="15"
+                            [(ngModel)]="patientDetail.gender" [ngModelOptions]="{standalone: true}">
+                    </div>
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label class="control-label" for="weight">Peso</label>
+                    <div class="">
+                        <input id="weight" name="weight" class="form-control input-md" required="" type="number"
+                            maxlength="5" [(ngModel)]="patientDetail.weight" [ngModelOptions]="{standalone: true}">
+                    </div>
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label class=" control-label">Altura</label>
+                    <div class="">
+                        <input class="form-control input-md" required="" type="number" maxlength="5"
+                            [(ngModel)]="patientDetail.height" [ngModelOptions]="{standalone: true}">
+                    </div>
+                </div>
+
+            </div>
+
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="createPatient()">Save</button>
+    </div>
+</ng-template>
+
+<ng-template #modalDelete let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-title">Excluir paciente</h4>
+        <button type="button" class="close" aria-label="Close button" aria-describedby="modal-title"
+            (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p><strong>Você tem certeza em deletar o cadastro <span class="text-primary">"{{patientDetail?.name}}"</span> profile?</strong>
+        </p>
+        <p>Todas as informações asociadas a este cadastro serão excluidas.
+            <span class="text-danger">Esta operação não poderá ser desfeita.</span>
+        </p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary"
+            (click)="modal.dismiss('cancel click')">Cancelar</button>
+        <button type="button" ngbAutofocus class="btn btn-danger" (click)="modal.close('Ok click')">Deletar</button>
+    </div>
+</ng-template>

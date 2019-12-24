@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PatientService } from './patient.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
+import { SharedDataService } from 'src/app/utils/sharedData.service';
 
 @Component({
   // tslint:disable-next-line: component-selector
@@ -24,7 +26,9 @@ export class PatientComponent implements OnInit {
 
   constructor(
     private patientService: PatientService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private router: Router,
+    private sharedDataService: SharedDataService
   ) {}
 
   ngOnInit() {
@@ -59,7 +63,6 @@ export class PatientComponent implements OnInit {
   }
 
   createPatient() {
-    console.log(this.patient);
     this.patientService
       .create(this.patient)
       .toPromise()
@@ -74,5 +77,10 @@ export class PatientComponent implements OnInit {
           console.log(err);
         }
       );
+  }
+
+  goToEditPage(patient: any) {
+    this.sharedDataService.saveData(patient);
+    this.router.navigate(['/patientDetail']);
   }
 }

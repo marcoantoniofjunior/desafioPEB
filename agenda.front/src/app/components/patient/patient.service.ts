@@ -39,4 +39,16 @@ export class PatientService {
     return this.httpClient.post(`${ApiUrl}/patient/delete`, JSON.stringify(patient), this.getOptions());
   }
 
+  getAnnotations(patient: any): Observable<object>{
+    return this.httpClient.post(`${ApiUrl}/patient/getAnnotations`, JSON.stringify(patient), this.getOptions());
+  }
+
+  createAnnotation(annotation: any): Observable<object>{
+    return this.httpClient.post(`${ApiUrl}/patient/deleteCreate`, JSON.stringify(annotation), this.getOptions());
+  }
+
+  deleteAnnotation(annotation: any): Observable<object>{
+    return this.httpClient.post(`${ApiUrl}/patient/deleteAnnotation`, JSON.stringify(annotation), this.getOptions());
+  }
+
 }

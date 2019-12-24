@@ -13,15 +13,14 @@ import { SchedulesService } from './components/schedules/schedules.service';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PatientDetailComponent } from './components/patient/patient-detail/patient-detail.component';
-import { ScheduleDetailComponent } from './components/schedules/schedule-detail/schedule-detail.component';
+import { SharedDataService } from './utils/sharedData.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     PatientComponent,
     SchedulesComponent,
-    PatientDetailComponent,
-    ScheduleDetailComponent
+    PatientDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -33,6 +32,7 @@ import { ScheduleDetailComponent } from './components/schedules/schedule-detail/
   providers: [
     SchedulesService,
     PatientService,
+    SharedDataService,
     NgbModal
   ],
   bootstrap: [AppComponent]
